@@ -1,54 +1,56 @@
 """
-2.	Посчитать четные и нечетные цифры введенного натурального числа.
-Например, если введено число 34560, то у него 3 четные цифры
-(4, 6 и 0) и 2 нечетные (3 и 5).
+Задание 2.
 
-Подсказка:
-На каждом шаге вам нужно 'доставать' из числа очередную цифру
-и смотреть является ли она четной или нечетной. При этом увеличиваем соответствующий счетчик
-Пока все числа не извлечены рекурсивные вызовы продолжаем
-Условие завершения рекурсии - все числа извлечены
-Используем операции % //
+Приведен код, который формирует из введенного числа
+обратное по порядку входящих в него цифр.
+Задача решена через рекурсию
 
-Решите через рекурсию. Решение через цикл не принимается.
-Для оценки Отлично в этом блоке необходимо выполнить 5 заданий из 7
+Сделайте замеры времени выполнения кода с помощью модуля timeit
 
-Пример:
-Введите число: 123
-Количество четных и нечетных цифр в числе равно: (1, 2)
+Попробуйте оптимизировать код, чтобы снизить время выполнения
+Проведите повторные замеры
+
+Подсказка: примените мемоизацию
+
+Добавьте аналитику: что вы сделали и почему
 """
-https://habr.com/ru/post/275813/
-
-def numbers (self):
-    num= input("введите целое число")
-    map(int, str(num))
+from timeit import timeit
+from random import randint
 
 
-def recursion(num):
-    map(int, str(num))
-    x=0
-    if num[x]//2 == 0:
-        return even+=1
-        x+=1
-    elif len(num)==0:
-        return print("even"- even, "odd"- odd)
-    else:
-        return odd+=1
-        x+=1
-    """Рекурсия"""
-    # базовый случай
-    # последний шаг рекурсии
-    if a == b:
-        return str(a)
-    # шаг рекурсии
-    # рекурсивное условие
-    elif a > b:
-        return f'{str(a)} {recursion(a - 1, b)}'
-    # шаг рекурсии
-    # рекурсивное условие
-    elif a < b:
-        return f'{str(a)} {recursion(a + 1, b)}'
+def memorization(func):
+        mem1 = {}
+
+    def memory (*args):
+
+        if args in mem1:
+            return mem1[args]
+        else:
+            mem1[args] = f(*args)
+            return mem1[args]
+    return memory
 
 
-print(recursion(20, 15))
-print(recursion(10, 15))
+def recursive_reverse(number):
+    if number == 0:
+        return str(number % 10)
+    return f'{str(number % 10)}{recursive_reverse(number // 10)}'
+
+num_100 = randint(10000, 1000000)
+print(
+    timeit(
+        "recursive_reverse(num_100)",
+        setup='from __main__ import recursive_reverse, num_100',
+        number=10000))
+
+@memorization
+def recursive_reverse(number):
+    if number == 0:
+        return str(number % 10)
+    return f'{str(number % 10)}{recursive_reverse(number // 10)}'
+
+print(
+    timeit(
+        'recursive_reverse_mem(num_100)',
+        setup='from __main__ import recursive_reverse_mem, num_100',
+        number=10000))
