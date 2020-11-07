@@ -1,64 +1,50 @@
 """
-1.	Написать программу, которая будет складывать, вычитать, умножать или делить
-два числа. Числа и знак операции вводятся пользователем. После выполнения
-вычисления программа не должна завершаться, а должна запрашивать новые данные
-для вычислений. Завершение программы должно выполняться при вводе символа '0'
-в качестве знака операции. Если пользователь вводит неверный знак
-(не '0', '+', '-', '*', '/'), то программа должна сообщать ему об ошибке и
-снова запрашивать знак операции.
+Задание 1.
 
-Также сообщать пользователю о невозможности деления на ноль,
-если он ввел 0 в качестве делителя.
+Приведен код, который позволяет сохранить в
+массиве индексы четных элементов другого массива
 
-Подсказка:
-Вариант исполнения:
-- условие рекурсивного вызова - введена операция +, -, *, / - ШАГ РЕКУРСИИ
-- условие завершения рекурсии - введена операция 0 - БАЗОВЫЙ СЛУЧАЙ
+Сделайте замеры времени выполнения кода с помощью модуля timeit
 
-Решите через рекурсию. Решение через цикл не принимается.
-Для оценки Отлично в этом блоке необходимо выполнить 5 заданий из 7
+Попробуйте оптимизировать код, чтобы снизить время выполнения
+Проведите повторные замеры
 
-Пример:
-Введите операцию (+, -, *, / или 0 для выхода): +
-Введите первое число: 214
-Введите второе число: 234
-Ваш результат 448
-Введите операцию (+, -, *, / или 0 для выхода): -
-Введите первое число: вп
-Вы вместо трехзначного числа ввели строку (((. Исправьтесь
-Введите операцию (+, -, *, / или 0 для выхода):
+Добавьте аналитику: что вы сделали и почему
 """
 
-class Script(Exception):
-    def __init__(self, data, sheld):
-        self.data = data
-        sheld = []
-        data = input("Enter number to exit enter 'stop'").lower()
-        if data !="stop":
-            if data.isdigit() == True:
-                sheld.append(data)
-                data = input("Enter number to exit enter 'stop'")
+
+import timeit
 
 
+def func_1(nums):
+    """По нотации О большое- линейная сложность"""
+    new_arr = []
+    for i in range(len(nums)):
+        if nums[i] % 2 == 0:
+            new_arr.append(i)
+    return new_arr
 
-def menu():
-    print ("Welcome to calculator.py")
-    print ("your options are:") pr
-    int (" ") print ("1) Addition")
-    print ("2) Subtraction")
-    print ("3) Multiplication")
-    print ("4) Division")
-    print ("5) Quit calculator.py")
-    print (" ")
-    return input ("Choose your option: ")
 
-    def add(a,b): print (a, "+", b, "=", a + b)
-    def sub(a,b): print (b, "-", a, "=", b - a)
-    def mul(a,b): print (a, "*", b, "=", a * b)
-    def div(a,b): print (a, "/", b, "=", a / b) loop = 1 choice = 0
-    while loop == 1: choice = menu()
-    if choice == 1: add(input("Add this: "),input("to this: "))
-    elif choice == 2: sub(input("Subtract this: "),input("from this: "))
-    elif choice == 3: mul(input("Multiply this: "),input("by this: "))
-    elif choice == 4: div(input("Divide this: "),input("by this: "))
-    elif choice == 5: loop = 0 print ("Thank you for using calculator.py!")
+def func_2(nums):
+    """По нотации О большое- линейная сложность"""
+    return [i for i, el in enum(nums) if el % 2 == 0]
+
+
+nums = [i for i in range(10000)]
+
+print(
+    timeit.timeit(
+        "func_1(nums)",
+        setup="from __main__ import func_1, nums",
+        number=10000))
+
+nums = [i for i in range(10000)]
+print(
+    timeit.timeit(
+        "func_2(NUMS)",
+        setup="from __main__ import func_2, nums",
+        number=10000))
+
+Генераторное выражение эффективнее, поскольку выполняется быстрее цикла for
+
+
